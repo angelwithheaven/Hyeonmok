@@ -274,6 +274,14 @@
                 animation-duration: 0.5s;
             }
         }
+        .world-page { display: none; }
+        .world-page.active { display: block; }
+        .world-nav-btn { white-space: nowrap; }
+        .world-nav-btn.active { background: #1e3a8a; color: #fff; box-shadow: inset 0 -3px #fbbf24; }
+        .chat-bubble { max-width: 82%; padding: 10px 13px; border-radius: 15px; line-height: 1.55; font-size: 13px; overflow-wrap: anywhere; }
+        .chat-mom { background: #fff; border-top-left-radius: 4px; color: #334155; }
+        .chat-user { background: #fee500; border-top-right-radius: 4px; color: #292929; }
+        .blog-photo-placeholder { min-height: 170px; display: flex; align-items: center; justify-content: center; border: 1px dashed #94a3b8; background: #f1f5f9; color: #64748b; font-size: 12px; text-align: center; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 relative select-none">
@@ -377,7 +385,7 @@
         </div>
 
         <!-- 메인 네비게이션 -->
-        <nav class="bg-gov-800 text-white font-medium text-sm">
+        <nav id="portalNav" class="bg-gov-800 text-white font-medium text-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 sm:space-x-2 overflow-x-auto">
                 <button onclick="switchTab('intro')" id="tab-intro" class="nav-btn px-4 py-3 border-b-2 border-amber-400 font-bold text-white hover:bg-gov-700 transition">
                     <i class="fa-solid fa-circle-info mr-1.5"></i>마을 소개
@@ -394,6 +402,17 @@
             </div>
         </nav>
     </header>
+
+    <nav class="sticky top-0 z-20 border-b border-slate-300 bg-slate-100 shadow-sm" aria-label="가상 인터넷">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 flex gap-1 overflow-x-auto py-1.5 text-sm">
+            <button class="world-nav-btn active rounded-md px-3 py-2 hover:bg-white" data-page="portal" onclick="switchSitePage('portal')"><i class="fa-solid fa-house mr-1.5"></i>현목리 포털</button>
+            <button class="world-nav-btn rounded-md px-3 py-2 hover:bg-white" data-page="blog" onclick="switchSitePage('blog')"><i class="fa-solid fa-book-open mr-1.5"></i>개인 블로그</button>
+            <button class="world-nav-btn rounded-md px-3 py-2 hover:bg-white" data-page="news" onclick="switchSitePage('news')"><i class="fa-regular fa-newspaper mr-1.5"></i>뉴스·기사</button>
+            <button class="world-nav-btn rounded-md px-3 py-2 hover:bg-white" data-page="chat" onclick="switchSitePage('chat')"><i class="fa-solid fa-comment-dots mr-1.5"></i>메신저</button>
+        </div>
+    </nav>
+
+    <div id="site-portal">
 
     <!-- 실시간 공지사항 스크롤 티커 -->
     <div class="bg-gov-100 border-b border-blue-200 py-2 px-4 text-xs sm:text-sm text-gov-950 flex items-center">
@@ -824,6 +843,79 @@
             </div>
         </div>
     </footer>
+    </div><!-- /site-portal -->
+
+    <section id="page-blog" class="world-page flex-1">
+        <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+            <div class="bg-white border border-slate-200 shadow-sm">
+                <div class="border-b-4 border-emerald-700 px-6 py-5">
+                    <p class="text-xs tracking-[0.2em] text-emerald-700 font-bold">SLOW LIFE · PERSONAL LOG</p>
+                    <h2 class="mt-2 text-3xl font-black text-slate-800">현목리 귀농 일기</h2>
+                    <p class="mt-2 text-sm text-slate-500">도시를 떠나, 조금 느리게 살아보기.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-[180px_1fr]">
+                    <aside class="bg-slate-50 border-b sm:border-b-0 sm:border-r border-slate-200 p-5 text-sm">
+                        <div class="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800 text-3xl mx-auto sm:mx-0"><i class="fa-solid fa-seedling"></i></div>
+                        <p class="font-bold mt-3">산 아래 작은 집</p><p class="text-xs text-slate-500 mt-1">귀농 17일 차부터</p>
+                        <div class="border-t mt-4 pt-3 space-y-2 text-xs text-slate-600"><p>전체 글 <span class="float-right">7</span></p><p>사진첩 <span class="float-right">12</span></p><p>방명록 <span class="float-right">3</span></p></div>
+                    </aside>
+                    <div class="p-5 sm:p-7 space-y-7">
+                        <article class="border-b border-slate-200 pb-7"><p class="text-xs text-slate-400">2015. 05. 28 · 귀농 첫날</p><h3 class="text-xl font-bold mt-2">생각보다 조용한 마을</h3><p class="text-sm leading-7 mt-3">오늘 현목리에 도착했다. 공기가 맑고 산이 가까워서 그런지 서울에서보다 숨이 편하게 쉬어지는 기분이다. 마을 사람들이 다들 친절했고, 집을 구하는 일도 생각보다 수월했다. 저녁에는 어머니뻘 되는 분이 반찬을 가져다주셨다. 이름은 미실 씨라고 했다.</p><div class="blog-photo-placeholder mt-4">[사진 삽입 위치 1]<br>마을 입구 또는 처음 도착한 집 사진</div><p class="text-xs text-slate-400 mt-3">댓글 2 · 공감 8</p></article>
+                        <article class="border-b border-slate-200 pb-7"><p class="text-xs text-slate-400">2015. 06. 01 · 5일 차</p><h3 class="text-xl font-bold mt-2">노란 지붕 집</h3><p class="text-sm leading-7 mt-3">마을에서 길을 잃었는데 누군가 노란 지붕 집을 찾아가면 된다고 알려줬다. 이상하게도 다들 그 집을 설명할 때 주소보다 지붕 색을 먼저 말한다. 미실 씨는 그게 오래된 별칭이라고 웃었다. 별다른 뜻은 없겠지.</p><div class="blog-photo-placeholder mt-4">[사진 삽입 위치 2]<br>노란 지붕이나 골목 사진</div><p class="text-xs text-slate-400 mt-3">댓글 1 · 공감 11</p></article>
+                        <article class="border-b border-slate-200 pb-7"><p class="text-xs text-slate-400">2015. 06. 04 · 8일 차</p><h3 class="text-xl font-bold mt-2">일요일의 노래</h3><p class="text-sm leading-7 mt-3">일요일에는 사람들이 한 건물에 모인다. 멀리서 노랫소리가 들렸는데, 노래라기보다는 누군가 같은 말을 계속 반복하는 소리에 가까웠다. 물어보니 다들 기도라고 했다. 나한테도 한번 와 보라고 했지만 아직은 됐다.</p><p class="text-xs text-slate-400 mt-3">댓글 0 · 공감 4</p></article>
+                        <article class="border-b border-slate-200 pb-7"><p class="text-xs text-slate-400">2015. 06. 07 · 11일 차</p><h3 class="text-xl font-bold mt-2">사진에 없는 사람</h3><p class="text-sm leading-7 mt-3">어제 마을 사람들과 사진을 찍었다. 사진을 정리하다 보니 내가 기억하는 것보다 사람이 한 명 더 서 있는 것 같다. 뒤쪽이라 얼굴은 잘 안 보인다. 그냥 지나가는 주민이었겠지. 사진은 나중에 다시 올려야겠다.</p><div class="blog-photo-placeholder mt-4">[사진 삽입 위치 3]<br>사람들이 모여 있는 사진 — 직접 이미지 교체</div><p class="text-xs text-slate-400 mt-3">댓글 3 · 공감 6</p></article>
+                        <article class="border-b border-slate-200 pb-7"><p class="text-xs text-slate-400">2015. 06. 10 · 14일 차</p><h3 class="text-xl font-bold mt-2">어젯밤에 문을 두드린 사람</h3><p class="text-sm leading-7 mt-3">새벽에 누가 문을 두드렸다. 세 번 두드리고 한참 기다렸다가 다시 세 번. 문을 열지 않았더니 복도에서 낮은 목소리로 내 이름을 불렀다. 이사 온 지 얼마 되지도 않았는데 누가 내 이름을 알지? 아침에 물어봤더니 아무도 그런 적 없다고 했다.</p><p class="text-xs text-slate-400 mt-3">댓글 0 · 공감 2</p></article>
+                        <article class="border-b border-slate-200 pb-7"><p class="text-xs text-slate-400">2015. 06. 12 · 16일 차</p><h3 class="text-xl font-bold mt-2">통신이 안 되는 이유</h3><p class="text-sm leading-7 mt-3">휴대전화가 계속 먹통이다. 산 때문이라고 하는데, 마을 밖으로 조금만 걸어 나가도 똑같다. 오늘은 길을 알려주던 사람이 내가 어디로 가려는지 묻지도 않고 집으로 돌아가라고 했다. 웃으면서 말했는데, 눈은 웃지 않았다.</p><p class="text-xs text-slate-400 mt-3">댓글 0 · 공감 1</p></article>
+                        <article class="pb-2"><p class="text-xs text-slate-400">2015. 06. 13 · 마지막 수정</p><h3 class="text-xl font-bold mt-2">이 글을 누가 읽고 있다면</h3><p class="text-sm leading-7 mt-3">아까 집 앞에 미실 씨가 왔다. 혼자 온 게 아니었다. 뒤에 노란 옷을 입은 남자가 서 있었는데, 내가 문을 열자마자 웃으면서 물었다. 언제까지 여기 있을 생각이냐고. 나는 그냥 잠깐 머물다 갈 거라고 했는데, 그 사람이 그러더라. 여기에 온 사람은 다들 처음엔 그렇게 말한다고.</p><p class="text-sm leading-7 mt-3">지금 밖에서 또 소리가 난다. 이번에는 문을 두드리는 게 아니라 손잡이를 천천히 돌리고 있다. 전화를 해도 연결이 안 되고, 창문은 밖에서 잠긴 것처럼 열리지 않는다. 만약 내일 이 글이 그대로 남아 있다면 누군가 이 주소를 기억해 줬으면 좋겠다. 나는 지금 현목리에서 나가려고 하는데, 길이—</p><p class="text-xs text-slate-400 mt-3">댓글 0 · 공감 0</p></article>
+                        <div class="border-t pt-4 text-xs text-slate-400">이 블로그는 2015년 6월 13일 이후 업데이트되지 않았습니다.</div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="switchSitePage('portal')" class="mt-5 text-sm text-gov-800 underline">← 현목리 포털로 돌아가기</button>
+        </div>
+    </section>
+
+    <section id="page-news" class="world-page flex-1">
+        <div class="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+            <div class="bg-white border border-slate-200 shadow-sm">
+                <div class="px-5 sm:px-8 pt-6 pb-4 border-b"><div class="flex items-center gap-2 text-xs font-bold text-red-700"><span class="bg-red-700 text-white px-2 py-1">사회</span><span>민중의 지팡이</span><span class="text-slate-400 font-normal">2015.06.18</span></div><h2 class="text-2xl sm:text-3xl font-black leading-tight mt-4 text-slate-900">민중의 지팡이, 민중을 향한 지팡이가 되다</h2><p class="text-base sm:text-lg font-bold text-slate-600 mt-3">대기 명령 어기고 인질 구출 나선 신임 순경… 현장 대응 두고 엇갈린 평가</p><p class="text-xs text-slate-400 mt-3">서울 | 사회부 · 2015년 6월</p></div>
+                <article class="px-5 sm:px-8 py-6 text-[15px] leading-8 text-slate-700 space-y-4">
+                    <p>서울의 한 대형마트에서 발생한 무차별 칼부림 및 인질극 사건을 두고 경찰의 현장 대응이 논란이 되고 있다. 현장에 투입된 신임 경찰관 양○○ 순경이 상부의 대기 명령을 어기고 단독으로 진입한 사실이 알려지면서, 인질 구출을 위한 판단이었다는 옹호와 무리한 대응이 사태를 악화했다는 비판이 맞서고 있다.</p>
+                    <p>사건은 지난주 오후, 마트 내부에서 흉기를 든 남성이 시민들을 위협하고 한 명을 인질로 붙잡으면서 시작됐다. 경찰은 주변을 통제하고 협상을 시도했으나, 가해자가 인질을 위협하는 상황이 이어졌다. 당시 현장 지휘부는 추가 피해 가능성을 고려해 대기 명령을 내렸지만, 양○○ 순경은 인질의 생명이 위태롭다고 판단해 독단적으로 건물 안으로 진입했다.</p>
+                    <p>진입 과정에서 인질은 구출됐으나 가해자는 현장에서 스스로 목숨을 끊었다. 인질과 경찰관 한 명이 부상을 입어 병원으로 옮겨졌다. 경찰은 양 순경의 진입 경위와 명령 전달 과정을 조사 중이며, 작전 규정 위반 여부와 책임 소재를 검토하고 있다고 밝혔다.</p>
+                    <p>양 순경이 경찰대 수석 출신의 신임 경찰관이라는 사실이 알려지면서 논쟁은 더욱 커졌다. 시민들 사이에서는 위험을 감수하고 인질을 구한 결단이었다는 평가가 나오는 한편, 현장 지휘 체계를 무시한 행동은 다른 대원과 인질까지 위험에 빠뜨릴 수 있었다는 지적도 제기됐다.</p>
+                    <p>이번 사건은 긴급 상황에서 경찰관 개인의 판단과 조직의 지휘 체계가 어디까지 양립할 수 있는지를 드러냈다. 경찰은 관련자 진술과 현장 기록을 토대로 사건 경위를 확인하고 있으며, 신임 경찰관의 작전 투입 기준과 현장 대응 교육에 대한 논의도 이어질 전망이다.</p>
+                    <p class="text-xs text-slate-400 border-t pt-4">※ 사건 관계자의 신원 보호를 위해 일부 이름을 가렸습니다.</p>
+                </article>
+                <div class="border-t bg-slate-50 px-5 sm:px-8 py-4 text-xs text-slate-500 flex flex-wrap justify-between gap-2"><span>댓글 38 · 공유 124</span><span>민중의 지팡이 | 사회부</span></div>
+            </div>
+            <button onclick="switchSitePage('chat')" class="mt-5 text-sm text-gov-800 underline">← 우미실 씨와의 대화로 돌아가기</button>
+        </div>
+    </section>
+
+    <section id="page-chat" class="world-page flex-1">
+        <div class="max-w-2xl mx-auto px-3 py-7 sm:py-10">
+            <div class="overflow-hidden rounded-xl border border-slate-300 shadow-lg bg-[#bacee0]">
+                <div class="bg-[#f8f8f8] border-b px-4 py-4 flex items-center justify-between"><div class="flex items-center gap-3"><button onclick="switchSitePage('portal')" class="text-slate-500"><i class="fa-solid fa-chevron-left"></i></button><div class="w-10 h-10 rounded-full bg-rose-200 flex items-center justify-center text-rose-700"><i class="fa-solid fa-user"></i></div><div><p class="font-bold text-sm">우미실</p><p class="text-[11px] text-slate-500">엄마</p></div></div><span class="text-slate-400"><i class="fa-solid fa-magnifying-glass mr-3"></i><i class="fa-solid fa-bars"></i></span></div>
+                <div class="bg-[#bacee0] px-3 py-5 sm:px-5 space-y-4">
+                    <div class="text-center"><span class="rounded-full bg-black/10 px-3 py-1 text-[11px] text-slate-700">2015년 6월 18일 목요일</span></div>
+                    <div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-rose-200 shrink-0 flex items-center justify-center text-rose-700 text-xs">엄마</div><div class="space-y-1"><div class="chat-bubble chat-mom">딸~~ 기사 잘 봤어~~</div><div class="chat-bubble chat-mom">엄마는 네가 쓴 기사 보니까 마음이 좀 그렇더라. 그래도 역시 우리 딸이네 싶고ㅎㅎ</div><button onclick="switchSitePage('news')" class="text-left bg-white rounded-lg p-3 max-w-[260px] shadow-sm block"><span class="block text-[10px] text-slate-500 mb-1">민중의 지팡이 · 2015.06.18</span><span class="block text-sm font-bold text-slate-800">민중의 지팡이, 민중을 향한 지팡이가 되다</span><span class="block text-xs text-blue-600 mt-2 underline">기사 보러 가기 ↗</span></button><div class="text-[10px] text-slate-500">오후 8:41</div></div></div>
+                    <div class="flex justify-end"><div class="space-y-1 flex flex-col items-end"><div class="chat-bubble chat-user">그냥 사건 기사야ㅋㅋ 별일 없어.</div><div class="chat-bubble chat-user">엄마는 기사 읽고 그런 생각 하지 마.</div><div class="text-[10px] text-slate-500">오후 8:45</div></div></div>
+                    <div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-rose-200 shrink-0 flex items-center justify-center text-rose-700 text-xs">엄마</div><div class="space-y-1"><div class="chat-bubble chat-mom">그래그래~~ 밥은 먹었고? 바쁜 건 알지만 밥 잘 챙겨 먹어.</div><div class="text-[10px] text-slate-500">오후 8:47</div></div></div>
+                    <div class="mt-7 border-t border-black/10 pt-4 text-center"><span class="rounded-full bg-black/10 px-3 py-1 text-[11px] text-slate-700">2015년 7월 16일 목요일</span></div>
+                    <div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-rose-200 shrink-0 flex items-center justify-center text-rose-700 text-xs">엄마</div><div class="space-y-1"><div class="chat-bubble chat-mom">딸~~ 여름휴가 언제야?</div><div class="chat-bubble chat-mom">이번엔 꼭 현목리 내려와. 얼굴 본 지도 오래됐잖아.</div><div class="chat-bubble chat-mom">공기 좋고 밥도 잘 나오고, 와서 며칠 쉬다 가면 좋지~~</div><div class="text-[10px] text-slate-500">오후 6:12</div></div></div>
+                    <div class="flex justify-end"><div class="space-y-1 flex flex-col items-end"><div class="chat-bubble chat-user">일정 봐야 돼. 갑자기 왜 이렇게 오라고 해?</div><div class="text-[10px] text-slate-500">오후 6:15</div></div></div>
+                    <div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-rose-200 shrink-0 flex items-center justify-center text-rose-700 text-xs">엄마</div><div class="space-y-1"><div class="chat-bubble chat-mom">엄마가 딸 보고 싶어서 그러지~~ 길도전도 한번 같이 가보자. 네가 오면 다들 얼마나 반가워하겠니.</div><div class="chat-bubble chat-mom">여기 와서 지내다 보면 생각보다 마음 편해. 엄마는 요즘 참 좋아.</div><div class="text-[10px] text-slate-500">오후 6:16</div></div></div>
+                    <div class="flex justify-end"><div class="space-y-1 flex flex-col items-end"><div class="chat-bubble chat-user">엄마 또 신길회 얘기야? 난 휴가 가서 쉬고 싶다니까.</div><div class="text-[10px] text-slate-500">오후 6:19</div></div></div>
+                    <div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-rose-200 shrink-0 flex items-center justify-center text-rose-700 text-xs">엄마</div><div class="space-y-1"><div class="chat-bubble chat-mom">알았어 알았어~~ 그래도 한번만 와 봐. 엄마가 맛있는 거 해놓을게. 응?</div><div class="chat-bubble chat-mom">그리고 여기 사람들한테 네 얘기도 했어. 길도원 선지자님도 네가 온다니까 반가워하시더라.</div><div class="text-[10px] text-slate-500">오후 6:21</div></div></div>
+                    <div class="flex justify-end"><div class="space-y-1 flex flex-col items-end"><div class="chat-bubble chat-user">내가 간다고 한 적은 없는데ㅋㅋ</div><div class="text-[10px] text-slate-500">오후 6:23</div></div></div>
+                    <div class="flex items-start gap-2"><div class="w-8 h-8 rounded-full bg-rose-200 shrink-0 flex items-center justify-center text-rose-700 text-xs">엄마</div><div class="space-y-1"><div class="chat-bubble chat-mom">그러니까 꼭 와. 날짜 정해지면 엄마한테 바로 알려주고~~ 사랑해 딸♡</div><div class="text-[10px] text-slate-500">오후 6:24</div></div></div>
+                </div>
+                <div class="bg-[#f8f8f8] border-t px-3 py-3 flex items-center gap-2"><div class="flex-1 bg-white rounded-full border px-4 py-2 text-xs text-slate-400">메시지를 입력하세요</div><button class="w-9 h-9 rounded-full bg-[#fee500] text-slate-700"><i class="fa-solid fa-plus"></i></button></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 text-center">대화 기록은 2015년 7월 16일까지 표시됩니다.</p><button onclick="switchSitePage('portal')" class="mt-5 text-sm text-gov-800 underline">← 현목리 포털로 돌아가기</button>
+        </div>
+    </section>
 
     <!-- 귀농·귀촌 정착 심사 신청 모달 -->
     <div id="counselModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
@@ -884,6 +976,26 @@
     </div>
 
     <script>
+        function switchSitePage(page) {
+            document.getElementById('site-portal').style.display = page === 'portal' ? '' : 'none';
+            ['blog', 'news', 'chat'].forEach(function(name) {
+                document.getElementById('page-' + name).classList.toggle('active', page === name);
+            });
+            document.querySelectorAll('.world-nav-btn').forEach(function(button) {
+                button.classList.toggle('active', button.dataset.page === page);
+            });
+            document.getElementById('portalNav').style.display = page === 'portal' ? '' : 'none';
+            const titles = {
+                portal: ['현목리 마을안내 포털', 'Gyeonmok-ri Portal | 맑은 물과 도(道)가 흐르는 아름다운 수박과 한우의 고장'],
+                blog: ['현목리 귀농 일기', '개인 블로그 · 산 아래 작은 집'],
+                news: ['민중의 지팡이', '민중을 향한 지팡이가 되다 · 사회부 · 2015년 6월'],
+                chat: ['메신저', '우미실 · 대화 기록']
+            };
+            document.getElementById('headerTitleText').textContent = titles[page][0];
+            document.getElementById('headerSubText').textContent = titles[page][1];
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // 1. Web Audio API 신디사이저 (오디오 파일 없이 소리 내기)
         let audioCtx = null;
         function playBeep(freq = 440, duration = 0.3, type = 'sine') {
