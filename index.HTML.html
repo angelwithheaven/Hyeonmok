@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전라남도 신원군 현목읍 현목리 공식 마을 포털</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Noto Sans KR Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gov: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554',
+                        },
+                        horror: {
+                            red: '#dc2626',
+                            darkred: '#450a0a',
+                            blood: '#880808'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            transition: filter 0.5s ease, background-color 0.5s ease;
+        }
+
+        /* Glitch Keyframes & Classes */
+        @keyframes glitch-anim {
+            0% { transform: translate(0); text-shadow: none; }
+            20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ef4444, -2px 0 #3b82f6; }
+            40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #ef4444, 2px 0 #3b82f6; }
+            60% { transform: translate(2px, 2px); text-shadow: 2px 0 #3b82f6, -2px 0 #ef4444; }
+            80% { transform: translate(2px, -2px); text-shadow: -2px 0 #3b82f6, 2px 0 #ef4444; }
+            100% { transform: translate(0); text-shadow: none; }
+        }
+
+        .glitch-text-hover:hover {
+            animation: glitch-anim 0.2s infinite;
+        }
+
+        .force-glitch {
+            animation: glitch-anim 0.15s infinite !important;
+            color: #ef4444 !important;
+        }
+
+        /* Eerie Hidden Quotes */
+        .spooky-hover {
+            position: relative;
+        }
+        .spooky-hover::after {
+            content: attr(data-spooky);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            color: #ef4444;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        .spooky-hover:hover::after {
+            opacity: 1;
+        }
+
+        /* Blackout Overlay */
+        #blackoutOverlay {
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #blackoutOverlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Red Horror Mode */
+        body.horror-mode {
+            background-color: #0f0505 !important;
+            color: #fca5a5 !important;
+            filter: sepia(0.6) hue-rotate(300deg) contrast(1.2);
+        }
+        body.horror-mode .bg-white {
+            background-color: #1a0909 !important;
+            color: #fca5a5 !important;
+            border-color: #450a0a !important;
+        }
+        body.horror-mode .bg-gov-900, 
+        body.horror-mode .bg-gov-800,
+        body.horror-mode .bg-gov-700 {
+            background-color: #450a0a !important;
+        }
+
+        /* CRT Scanline Effect */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.06),
+                rgba(0, 255, 0, 0.02),
+                rgba(0, 0, 255, 0.06)
+            );
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-slow {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 35s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 relative select-none">
+
+    <!-- CRT Visual Overlay -->
+    <div class="scanlines fixed inset-0 z-40 opacity-40"></div>
+
+    <!-- Blackout Screen Effect Layer -->
+    <div id="blackoutOverlay" class="fixed inset-0 bg-black z-50 opacity-0 flex flex-col items-center justify-center p-6 text-center">
+        <div class="space-y-4 max-w-lg">
+            <p id="blackoutText" class="text-red-600 font-mono text-xl sm:text-2xl font-bold tracking-widest animate-pulse">
+                [ 시스템 장애 : 길도전 2층 수양실 신호 수신 중 ]
+            </p>
+            <p class="text-slate-400 text-xs sm:text-sm font-mono">
+                "옛 길(故道)의 기운이 감지되었습니다. 샛노란 상의를 정돈하십시오."
+            </p>
+            <div class="pt-4">
+                <span class="inline-block border border-red-900 text-red-500 text-xs px-3 py-1 font-mono">
+                    전파 차폐 구역 재동기화... <span id="blackoutTimer">3</span>초
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. 최상단 허구 경고 문구 배너 -->
+    <div class="bg-amber-400 text-amber-950 text-xs font-bold py-1.5 px-4 text-center border-b border-amber-500 shadow-sm flex items-center justify-center space-x-2 z-30">
+        <i class="fa-solid fa-triangle-exclamation text-amber-900"></i>
+        <span>※ 본 웹사이트에 수록된 지역, 인물, 단체, 사건 등은 모두 허구이며 실제와 전혀 관련이 없습니다. (픽션 안내)</span>
+    </div>
+
+    <!-- 2. 지자체 연계 및 상단 툴바 -->
+    <div class="bg-gov-950 text-slate-300 text-xs py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-gov-900">
+        <div class="flex items-center space-x-3">
+            <span class="font-medium"><i class="fa-solid fa-landmark text-blue-400 mr-1"></i> 전라남도 신원군 현목읍 행정관할</span>
+            <span class="text-slate-600">|</span>
+            <span class="hidden md:flex items-center text-slate-300">
+                <i class="fa-solid fa-smog text-slate-400 mr-1.5"></i>
+                <span>현목산 안개/짙은 짙음 (습도 94% · 전파차폐 100%)</span>
+            </span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <span id="currentTime" class="font-mono text-blue-300">2026.10.28 00:00:00</span>
+            <select class="bg-gov-900 text-slate-300 text-xs border border-gov-800 rounded px-1.5 py-0.5 focus:outline-none">
+                <option>한국어 (KR)</option>
+                <option>길문(吉文) 고어</option>
+            </select>
+            <button onclick="triggerBlackout()" class="text-slate-400 hover:text-white text-xs underline" title="화면 비상 점검">
+                비상점검
+            </button>
+        </div>
+    </div>
+
+    <!-- 헤더 & 로고 (마크 5회 클릭 시 호러모드) -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3.5 cursor-pointer" onclick="handleLogoClick()">
+                <div class="relative w-12 h-12 bg-gov-800 rounded-full flex items-center justify-center text-white shadow-md border-2 border-gov-600 shrink-0 group">
+                    <svg class="w-8 h-8 text-amber-400 transition transform group-hover:rotate-45" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                        <circle cx="50" cy="50" r="42" stroke-width="4" />
+                        <path d="M50 15 L50 85 M15 50 L85 50 M25 25 L75 75 M75 25 L25 75" stroke-width="3" stroke-dasharray="4 2" />
+                        <circle cx="50" cy="50" r="16" fill="#1e40af" stroke="currentColor" stroke-width="3"/>
+                        <text x="50" y="56" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">玄</text>
+                    </svg>
+                    <span id="logoClickBadge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black text-gov-950 tracking-tight flex items-center">
+                        <span id="headerTitleText" class="glitch-text-hover">현목리 마을안내 포털</span>
+                        <span class="ml-2 text-xs font-normal text-gov-700 bg-gov-50 border border-gov-300 px-2 py-0.5 rounded-full">공식</span>
+                    </h1>
+                    <p id="headerSubText" class="text-xs text-slate-500 font-medium">
+                        Gyeonmok-ri Portal | 맑은 물과 도(道)가 흐르는 아름다운 수박과 한우의 고장
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center bg-blue-50/80 border border-blue-200 rounded-lg p-2.5 text-xs text-slate-700 space-x-4 shadow-xs">
+                <div class="text-center border-r border-blue-200 pr-3">
+                    <span class="block text-slate-500 font-semibold">금주 정기 길취(吉聚)</span>
+                    <span class="font-bold text-gov-800 text-sm">일요일 18:00</span>
+                </div>
+                <div>
+                    <p class="font-bold text-gov-900 flex items-center">
+                        <i class="fa-solid fa-users-view-finder text-gov-600 mr-1.5"></i> 사단법인 신길회(新吉會)
+                    </p>
+                    <p class="text-slate-500">본당 1층 안내소 · 『길도집』 해설서 상시 배포</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 메인 네비게이션 -->
+        <nav class="bg-gov-800 text-white font-medium text-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 sm:space-x-2 overflow-x-auto">
+                <button onclick="switchTab('intro')" id="tab-intro" class="nav-btn px-4 py-3 border-b-2 border-amber-400 font-bold text-white hover:bg-gov-700 transition">
+                    <i class="fa-solid fa-circle-info mr-1.5"></i>마을 소개
+                </button>
+                <button onclick="switchTab('specialties')" id="tab-specialties" class="nav-btn px-4 py-3 border-b-2 border-transparent text-slate-200 hover:text-white hover:bg-gov-700 transition">
+                    <i class="fa-solid fa-cow mr-1.5"></i>특산물 & 길도전(吉導殿)
+                </button>
+                <button onclick="switchTab('welfare')" id="tab-welfare" class="nav-btn px-4 py-3 border-b-2 border-transparent text-slate-200 hover:text-white hover:bg-gov-700 transition">
+                    <i class="fa-solid fa-id-badge mr-1.5"></i>주민 수칙 & 계급 복장
+                </button>
+                <button onclick="switchTab('notices')" id="tab-notices" class="nav-btn px-4 py-3 border-b-2 border-transparent text-slate-200 hover:text-white hover:bg-gov-700 transition">
+                    <i class="fa-solid fa-calculator mr-1.5"></i>공지사항 & 길도성 계산기
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 실시간 공지사항 스크롤 티커 -->
+    <div class="bg-gov-100 border-b border-blue-200 py-2 px-4 text-xs sm:text-sm text-gov-950 flex items-center">
+        <div class="max-w-7xl mx-auto w-full flex items-center">
+            <span class="bg-gov-700 text-white text-xs font-bold px-2 py-0.5 rounded mr-3 shrink-0">마을 속보</span>
+            <div class="overflow-hidden whitespace-nowrap w-full">
+                <div class="animate-marquee-slow font-medium text-slate-800">
+                    <span class="mr-12"><i class="fa-solid fa-bell text-amber-600 mr-1"></i> [신길회] 일요일 저녁 길취(공동 식사) 참가 시 성의(길도성) 납부 내역 및 해당 수양 계급 복장(배지)을 필수 착용하십시오.</span>
+                    <span class="mr-12 text-red-700 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> [안내] 현목산 전파 차폐 구역 특성상 외부 개별 인터넷/전화 시도는 엄격히 제한됩니다.</span>
+                    <span class="mr-12"><i class="fa-solid fa-truck-ramp-box text-blue-600 mr-1"></i> [당번제] 매달 마지막 주 금요일 읍내 당번 4인이 마을 통합 생필품을 일괄 수송합니다.</span>
+                    <span class="mr-12 text-red-600 font-bold glitch-text-hover">[경고] 도망치십시오. 노란 지붕 집과 지하 1층에는 아무도 없습니다.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 영역 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+
+        <!-- TAB 1: 마을 소개 -->
+        <section id="content-intro" class="tab-content space-y-8">
+            <div class="relative bg-gradient-to-r from-gov-950 via-gov-900 to-slate-900 rounded-2xl overflow-hidden shadow-lg text-white p-6 sm:p-12 border border-gov-800">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs px-3 py-1 rounded-full inline-block font-semibold">
+                        전라남도 귀농·귀촌 우수 선도 마을
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight">
+                        아름다운 자연과 정이 넘치는 <br/>
+                        귀농·귀촌의 요람, <span id="heroVillageTitle" class="text-blue-400 glitch-text-hover cursor-pointer">현목리(玄木里)</span>
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        전라남도 신원군 현목읍에 위치한 현목리는 현목산 자락의 깨끗한 자연과 평화로운 사람들이 살아가는 공동체입니다. 
+                        명품 현목 한우, 핏빛처럼 달콤한 꿀수박, 그리고 길도전 지하에서 수복되는 전통 막걸리가 무럭무럭 익어가는 삶의 터전입니다.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="openCounselModal()" class="bg-gov-600 hover:bg-gov-700 text-white font-bold px-5 py-2.5 rounded-lg text-sm shadow transition flex items-center">
+                            <i class="fa-solid fa-pen-to-square mr-2"></i>귀농·귀촌 정착 심사 신청
+                        </button>
+                        <button onclick="switchTab('specialties')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-2.5 rounded-lg text-sm border border-white/20 transition">
+                            길도전(吉導殿) 문화센터 안내
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Menu Grids -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div onclick="openCounselModal()" class="bg-white border border-slate-200 rounded-xl p-4 text-center hover:border-gov-500 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-50 text-gov-700 rounded-full flex items-center justify-center mx-auto mb-2 text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-house-user"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-slate-800">귀농/귀촌 신청</h4>
+                    <p class="text-[11px] text-slate-500 mt-1">정착 심사 및 자가진단</p>
+                </div>
+
+                <div onclick="switchTab('specialties')" class="bg-white border border-slate-200 rounded-xl p-4 text-center hover:border-gov-500 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-apple-whole"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-slate-800">특산물 안내</h4>
+                    <p class="text-[11px] text-slate-500 mt-1">핏빛 수박 & 명품 한우</p>
+                </div>
+
+                <div onclick="switchTab('specialties')" class="bg-white border border-slate-200 rounded-xl p-4 text-center hover:border-gov-500 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-place-of-worship"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-slate-800">길도전 문화센터</h4>
+                    <p class="text-[11px] text-slate-500 mt-1">석회암 본당 층별 안내</p>
+                </div>
+
+                <div onclick="switchTab('welfare')" class="bg-white border border-slate-200 rounded-xl p-4 text-center hover:border-gov-500 hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-slate-800">마을 당번제 일정</h4>
+                    <p class="text-[11px] text-slate-500 mt-1">금요일 읍내 생필품 수송</p>
+                </div>
+
+                <div onclick="switchTab('welfare')" class="bg-white border border-slate-200 rounded-xl p-4 text-center hover:border-gov-500 hover:shadow-md transition cursor-pointer group col-span-2 sm:col-span-1">
+                    <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-gavel"></i>
+                    </div>
+                    <h4 class="font-bold text-sm text-slate-800">자격 심사 & 수양</h4>
+                    <p class="text-[11px] text-slate-500 mt-1">길고(吉苦) 체벌 수양 신청</p>
+                </div>
+            </div>
+
+            <!-- 인사말 & 정보 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+                    <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gov-950 flex items-center">
+                            <i class="fa-solid fa-user-tie text-gov-600 mr-2"></i>마을 대표(이장) 인사말
+                        </h3>
+                        <span class="text-xs text-slate-400">현목리 마을회관</span>
+                    </div>
+                    <div class="text-sm text-slate-700 leading-relaxed space-y-3">
+                        <p class="font-semibold text-slate-900">
+                            "안녕하십니까. 신원군 현목읍 현목리 마을 대표 박길도(朴吉道)입니다."
+                        </p>
+                        <p>
+                            우리 현목리는 외지에서 찾아오신 귀농·귀촌 희망자 여러분을 언제나 환대합니다. 
+                            현목산 너머 세속의 시끄러운 번뇌와 과거의 복잡한 연고는 모두 내려놓으시고, 이곳에서 바르고 정결한 삶을 시작해 보십시오.
+                        </p>
+                        <p class="spooky-hover bg-slate-50 p-3 rounded border border-slate-200 italic" data-spooky="떠난 이는 없습니다. 다만 사라진 이의 이름을 말하지 않을 뿐입니다.">
+                            "우리 마을에는 한 번 들어오면 다시 나가는 법을 잊을 만큼 깊은 안식과 평화가 존재합니다. 사단법인 신길회(新吉會)와 중심 본당 길도전(吉導殿)이 주민 여러분의 영육을 바른 길로 인도합니다."
+                        </p>
+                        <p>
+                            망설이지 마시고 현목리의 주민이 되어 새로운 길(吉)을 함께 걸어가기를 진심으로 권합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 text-white rounded-xl p-6 shadow-sm border border-slate-800 space-y-4">
+                    <h4 class="text-sm font-bold text-blue-400 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-chart-pie mr-2"></i>현목리 행정 데이터
+                    </h4>
+                    <ul class="space-y-3 text-xs divide-y divide-slate-800">
+                        <li class="flex justify-between pt-2">
+                            <span class="text-slate-400">행정구역</span>
+                            <span>전라남도 신원군 현목읍 현목리</span>
+                        </li>
+                        <li class="flex justify-between pt-2">
+                            <span class="text-slate-400">등록 가구 수</span>
+                            <span class="font-bold text-amber-400">142가구 (귀농 정착 비율 91%)</span>
+                        </li>
+                        <li class="flex justify-between pt-2">
+                            <span class="text-slate-400">신길회 신도 수</span>
+                            <span class="font-bold text-blue-300">약 5,000명 (마을 300명 + 읍내)</span>
+                        </li>
+                        <li class="flex justify-between pt-2">
+                            <span class="text-slate-400">외부 통신 상태</span>
+                            <span class="text-red-400 font-semibold">차폐 구역 (자체망만 허용)</span>
+                        </li>
+                        <li class="flex justify-between pt-2">
+                            <span class="text-slate-400">핵심 가치</span>
+                            <span class="text-slate-200">"옛 길을 끊고, 새 길을 맞이하자"</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 특산물 & 길도전 -->
+        <section id="content-specialties" class="tab-content hidden space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <h2 class="text-2xl font-bold text-gov-950">현목리 명품 특산물 & 길도전(吉導殿) 안내</h2>
+                <p class="text-sm text-slate-600 mt-1">현목산의 청정한 자연과 길도전의 은혜로 키워낸 마을 대표 자랑거리입니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 수박 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-emerald-800 text-white p-4 flex justify-between items-center">
+                        <h3 class="font-bold text-lg"><i class="fa-solid fa-cloud-sun-rain mr-2"></i>현목 붉은 꿀수박</h3>
+                        <span class="bg-emerald-600 text-xs px-2 py-0.5 rounded">당도 14Brix</span>
+                    </div>
+                    <div class="p-5 space-y-3 text-sm text-slate-700">
+                        <p class="leading-relaxed">
+                            화학비료 없이 오직 주민들의 지극 정성으로 가꿔낸 수박입니다. <strong class="text-red-700">속이 핏빛처럼 아주 붉고</strong> 즙이 풍부한 것이 특징입니다.
+                        </p>
+                        <div class="bg-slate-50 p-3 rounded text-xs text-slate-600 border border-slate-200">
+                            <strong>※ 특징:</strong> 수박 껍질 무늬가 사람의 지문 문양과 흡사하여 정밀 수확을 진행합니다.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 한우 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-amber-800 text-white p-4 flex justify-between items-center">
+                        <h3 class="font-bold text-lg"><i class="fa-solid fa-cow mr-2"></i>현목 명품 한우</h3>
+                        <span class="bg-amber-600 text-xs px-2 py-0.5 rounded">1++등급</span>
+                    </div>
+                    <div class="p-5 space-y-3 text-sm text-slate-700">
+                        <p class="leading-relaxed">
+                            현목산 약수를 마시고 신길회에서 직접 조합한 <strong class="text-amber-900">특제 발효 사료</strong>를 먹여 사육한 최고급 한우입니다.
+                        </p>
+                        <div class="bg-slate-50 p-3 rounded text-xs text-slate-600 border border-slate-200">
+                            <strong>※ 출하 제한:</strong> 모든 한우는 신길회 유통망을 거치며 외부 개인 거래는 금지됩니다.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 막걸리 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-800 text-white p-4 flex justify-between items-center">
+                        <h3 class="font-bold text-lg"><i class="fa-solid fa-wine-bottle mr-2"></i>길도(吉導) 전통 막걸리</h3>
+                        <span class="bg-blue-600 text-xs px-2 py-0.5 rounded">지하 숙성</span>
+                    </div>
+                    <div class="p-5 space-y-3 text-sm text-slate-700">
+                        <p class="leading-relaxed">
+                            무농약 쌀을 <strong class="text-gov-800">길도전 지하 발효실</strong>에서 숙성시킨 전통주입니다. 한 잔 마시면 세속의 근심과 마음의 번뇌가 사그라집니다.
+                        </p>
+                        <div class="bg-slate-50 p-3 rounded text-xs text-slate-600 border border-slate-200">
+                            <strong>※ 의무 음복:</strong> 일요일 저녁 '길취(공동 식사)' 시 주민 전원이 음복하는 정결한 음료입니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 길도전 구조 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+                <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gov-950">길도전 (吉導殿 / 본당) 시설 구조</h3>
+                    <span class="text-xs bg-gov-100 text-gov-800 px-3 py-1 rounded-full border border-gov-300">
+                        백색 석회암 건축물
+                    </span>
+                </div>
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    웅장한 외관과 단정한 실내를 갖춘 길도전은 백색 석회암으로 건축된 현대식 수양 본당입니다. 
+                    일요일이 되면 약 5,000명의 신도 및 주민이 모여 본당 앞 주차장이 수많은 차량으로 꽉 차는 장관을 이룹니다.
+                </p>
+
+                <div class="border rounded-lg overflow-hidden text-xs">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b">
+                            <tr>
+                                <th class="p-3 w-28">층수</th>
+                                <th class="p-3">주요 시설 및 용도</th>
+                                <th class="p-3 w-36">비고</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-3 font-bold bg-slate-50">3층~4층</td>
+                                <td class="p-3">정신 수양실 및 길문(吉文) 집회실</td>
+                                <td class="p-3 text-slate-500">일반인 출입 제한</td>
+                            </tr>
+                            <tr class="hover:bg-red-50 transition">
+                                <td class="p-3 font-bold bg-slate-50">2층</td>
+                                <td class="p-3">길고(吉苦) 수양실 (체벌 수양) 및 이장실</td>
+                                <td class="p-3 text-red-600 font-semibold">신청자/대상자 전용</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold bg-slate-50">1층</td>
+                                <td class="p-3">마을의원, 신길회 안내소, 『길도집』 해설서 판매처</td>
+                                <td class="p-3 text-gov-700 font-semibold">상시 개방 (09:00~18:00)</td>
+                            </tr>
+                            <tr class="hover:bg-amber-50 transition">
+                                <td class="p-3 font-bold bg-slate-50">지하 1층</td>
+                                <td class="p-3">대형 공동 식당 및 길도성(吉導誠) 납부 창구, 전통주 발효실</td>
+                                <td class="p-3 text-amber-800 font-bold">일요일 저녁 통제 출입</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: 주민 수칙 & 계급 복장 -->
+        <section id="content-welfare" class="tab-content hidden space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <h2 class="text-2xl font-bold text-gov-950">주민 생활 수칙 & 신길회 계급 규정</h2>
+                <p class="text-sm text-slate-600 mt-1">현목리 주민으로서 갖춰야 할 주간 정기 일정과 계급별 복장 수칙입니다.</p>
+            </div>
+
+            <!-- 계급별 복장 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+                <h3 class="text-lg font-bold text-gov-950 flex items-center">
+                    <i class="fa-solid fa-shirt text-gov-600 mr-2"></i>신길회 계급별 복장 및 배지 규정
+                </h3>
+                <p class="text-xs text-slate-500">본당 집회 및 일요일 길취 참석 시 본인 계급에 해당하는 옷과 배지를 정확히 착용하십시오.</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="border-t-4 border-amber-300 bg-white p-4 rounded-b-lg border-x border-b border-slate-200 shadow-xs">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-sm text-slate-900">생도자 (生道者)</span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-amber-300 inline-block border border-amber-400"></span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-1"><strong>복장:</strong> 까만 옷 / 연노란 배지</p>
+                        <p class="text-[11px] text-slate-500">일반 신도 및 전입 1년 미만 주민 (부모님 해당)</p>
+                    </div>
+
+                    <div class="border-t-4 border-amber-500 bg-white p-4 rounded-b-lg border-x border-b border-slate-200 shadow-xs">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-sm text-slate-900">동도자 (同道者)</span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-amber-500 inline-block"></span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-1"><strong>복장:</strong> 회색 옷 / 노란 배지</p>
+                        <p class="text-[11px] text-slate-500">수양된 신도 (약 50명)</p>
+                    </div>
+
+                    <div class="border-t-4 border-slate-600 bg-white p-4 rounded-b-lg border-x border-b border-slate-200 shadow-xs">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-sm text-slate-900">행도자 (行道者)</span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-slate-600 inline-block"></span>
+                        </div>
+                        <p class="text-xs text-slate-600 mb-1"><strong>복장:</strong> 베이지색 옷 / 진노란 배지</p>
+                        <p class="text-[11px] text-slate-500">간부급 신도 및 농장 관리직 (약 30명)</p>
+                    </div>
+
+                    <div class="border-t-4 border-slate-900 bg-slate-900 text-white p-4 rounded-b-lg shadow-xs">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-bold text-sm text-amber-400">선지자 (先知者)</span>
+                            <span class="w-3.5 h-3.5 rounded-full bg-yellow-400 inline-block"></span>
+                        </div>
+                        <p class="text-xs text-slate-300 mb-1"><strong>복장:</strong> 새하얀 옷 / 샛노란 배지</p>
+                        <p class="text-[11px] text-slate-400">교주 및 길 家 가족</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 주간 일정표 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+                <h3 class="text-lg font-bold text-gov-950 flex items-center">
+                    <i class="fa-solid fa-calendar-days text-gov-600 mr-2"></i>현목리 주간 생활 일정표
+                </h3>
+                <div class="space-y-3 text-xs sm:text-sm text-slate-700">
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200 flex flex-col sm:flex-row justify-between gap-2">
+                        <div>
+                            <strong class="text-gov-800">평일 및 토요일 (오전~낮)</strong>
+                            <p class="text-xs text-slate-500 mt-0.5">농사(수박) 및 축사 돌보기, 마을 일상 생활</p>
+                        </div>
+                        <span class="self-start sm:self-center bg-blue-100 text-blue-800 text-[11px] px-2 py-1 rounded">일상 근로</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200 flex flex-col sm:flex-row justify-between gap-2">
+                        <div>
+                            <strong class="text-gov-800">월요일 ~ 토요일 저녁 (19:00 ~ 22:00)</strong>
+                            <p class="text-xs text-slate-500 mt-0.5">길문(吉問) 수양: 교주가 던진 질문에 해설서 『길도집』으로 답을 찾는 교리 공부</p>
+                        </div>
+                        <span class="self-start sm:self-center bg-purple-100 text-purple-800 text-[11px] px-2 py-1 rounded">야간 수양</span>
+                    </div>
+                    <div class="p-3 bg-blue-50 rounded border border-blue-200 flex flex-col sm:flex-row justify-between gap-2">
+                        <div>
+                            <strong class="text-blue-900">일요일 전일 (10:00 ~ 20:00)</strong>
+                            <p class="text-xs text-slate-600 mt-0.5">오전 길원(기도) ➔ 오후 길도성(성금 납부) ➔ 저녁 길취(지하 식사 및 음복)</p>
+                        </div>
+                        <span class="self-start sm:self-center bg-blue-600 text-white text-[11px] px-2 py-1 rounded font-bold">대집회일</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: 공지사항 & 길도성 계산기 -->
+        <section id="content-notices" class="tab-content hidden space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <h2 class="text-2xl font-bold text-gov-950">공지사항 및 주간 길도성(吉導誠) 납부 계산기</h2>
+                <p class="text-sm text-slate-600 mt-1">마을 공식 공지 확인 및 신길회 주간 성의 납부 금액을 자율적으로 산정해 보십시오.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 공지사항 리스트 -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-gov-950 flex items-center">
+                        <i class="fa-solid fa-bullhorn text-gov-600 mr-2"></i>마을 공식 공지사항
+                    </h3>
+                    <ul class="space-y-3 text-sm divide-y divide-slate-100">
+                        <li class="pt-2 cursor-pointer hover:text-gov-600 transition" onclick="openNoticeModal('notice1')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-slate-800">[공지] 8월 22일 토요일 '정도제(正道祭)' 개최 안내</span>
+                                <span class="text-xs text-slate-400">2026.10.25</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1 truncate">전 신도 참석 필수, 새 길을 기원하는 대규모 마을 축제 행사입니다.</p>
+                        </li>
+                        <li class="pt-2 cursor-pointer hover:text-gov-600 transition" onclick="openNoticeModal('notice2')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-slate-800">[안내] 노란 지붕 집(미실 씨 댁) 정착 반년 기념 감사 예배</span>
+                                <span class="text-xs text-slate-400">2026.10.20</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1 truncate">귀농 가정의 모범 사례로 선정된 노란 지붕 집 소식 안내.</p>
+                        </li>
+                        <li class="pt-2 cursor-pointer hover:text-gov-600 transition" onclick="openNoticeModal('notice3')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-slate-800 text-red-600 font-semibold">[긴급] 외부 통신망 점검 및 기지국 차폐 안내</span>
+                                <span class="text-xs text-slate-400">2026.10.15</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1 truncate">마을 내부 안녕을 위해 유선 및 무선 통신 주파수가 조정됩니다.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 길도성 계산기 -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-4">
+                    <h3 class="text-lg font-bold text-gov-950 flex items-center">
+                        <i class="fa-solid fa-calculator text-gov-600 mr-2"></i>주간 길도성(吉導誠) 성의 산정기
+                    </h3>
+                    <p class="text-xs text-slate-500">한 주간 받은 가르침과 감사함에 따라 정성을 산정하는 자발적 정성 계산 도구입니다.</p>
+                    
+                    <div class="space-y-4 pt-2">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">일주일간 참석한 수양 횟수 (길문 6회 기준):</label>
+                            <input type="range" id="calcSessions" min="0" max="6" value="6" class="w-full accent-gov-600" oninput="calculateDonation()">
+                            <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                                <span>0회</span>
+                                <span>3회</span>
+                                <span id="sessionVal" class="font-bold text-gov-800">6회</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">마음의 평화와 은혜 체감도:</label>
+                            <select id="calcGrace" class="w-full bg-slate-50 border border-slate-300 text-xs rounded p-2 focus:outline-none" onchange="calculateDonation()">
+                                <option value="50000">보통 (기본 정성)</option>
+                                <option value="100000">깊은 깨달음 (감사 2배)</option>
+                                <option value="200000" selected>완벽한 길 도달 (충심 어린 정성)</option>
+                            </select>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center space-y-1">
+                            <span class="text-xs text-slate-600">권장 주간 길도성 납부 금액</span>
+                            <div id="resultAmount" class="text-2xl font-black text-gov-900 font-mono">200,000 원</div>
+                            <p class="text-[10px] text-slate-500">※ 수양 후 지하 1층 창구에서 봉납하실 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="bg-gov-950 text-slate-400 text-xs py-8 px-4 sm:px-8 border-t border-gov-900 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-slate-200">전라남도 신원군 현목읍 현목리 마을회관 / 사단법인 신길회</p>
+                <p class="mt-1 text-slate-500">우편번호: 58888 | 주소: 전라남도 신원군 현목읍 현목리 1번지 (길도전 본당)</p>
+                <p class="mt-1 text-slate-500">Copyright © 2026 Gyeonmok-ri Office & Shingil-hoe. All rights reserved.</p>
+            </div>
+            <div class="flex space-x-4 text-slate-300">
+                <span class="hover:text-white cursor-pointer" onclick="openNoticeModal('privacy')">개인정보처리방침</span>
+                <span>|</span>
+                <span class="hover:text-white cursor-pointer" onclick="openNoticeModal('terms')">이용약관</span>
+                <span>|</span>
+                <span class="hover:text-white cursor-pointer text-red-400" onclick="triggerBlackout()">비상망 연결</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 귀농·귀촌 정착 심사 신청 모달 -->
+    <div id="counselModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4 shadow-xl relative animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-lg text-gov-950 flex items-center">
+                    <i class="fa-solid fa-house-circle-check text-gov-600 mr-2"></i>귀농·귀촌 자가진단 및 정착 심사
+                </h3>
+                <button onclick="closeCounselModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="space-y-3 text-sm text-slate-700">
+                <p class="text-xs text-slate-500">현목리 전입 및 신길회 가입을 위한 사전 심사 설문입니다.</p>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">지원자 성명:</label>
+                    <input type="text" placeholder="성함을 입력하세요" class="w-full border rounded p-2 text-xs focus:outline-none focus:border-gov-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">과거의 기억과 연고를 모두 끊어낼 준비가 되었습니까?</label>
+                    <select class="w-full border rounded p-2 text-xs focus:outline-none">
+                        <option>예, 과거의 모든 짐을 내려놓겠습니다.</option>
+                        <option>고민 중입니다.</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">노란 지붕 집 인근 거주 희망 여부:</label>
+                    <select class="w-full border rounded p-2 text-xs focus:outline-none">
+                        <option>희망합니다 (길도원 님의 인도에 따름)</option>
+                        <option>상관없음</option>
+                    </select>
+                </div>
+            </div>
+            <div class="pt-3 border-t flex justify-end space-x-2">
+                <button onclick="closeCounselModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded text-xs font-semibold">취소</button>
+                <button onclick="submitCounsel()" class="px-4 py-2 bg-gov-600 hover:bg-gov-700 text-white rounded text-xs font-semibold">심사 신청서 제출</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공지사항 상세 모달 -->
+    <div id="noticeModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4 shadow-xl">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="noticeModalTitle" class="font-bold text-lg text-gov-950">공지사항 상세</h3>
+                <button onclick="closeNoticeModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="noticeModalBody" class="text-sm text-slate-700 leading-relaxed space-y-2">
+                <!-- 내용 동적 주입 -->
+            </div>
+            <div class="pt-3 border-t text-right">
+                <button onclick="closeNoticeModal()" class="px-4 py-2 bg-gov-600 text-white rounded text-xs font-semibold">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 실시간 시계
+        setInterval(() => {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('currentTime').innerText = `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
+        }, 1000);
+
+        // 2. 탭 전환 기능
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('border-amber-400', 'font-bold');
+                el.classList.add('border-transparent');
+            });
+
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.add('border-amber-400', 'font-bold');
+            activeBtn.classList.remove('border-transparent');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 3. 로고 5회 클릭 시 호러 모드 발동
+        let logoClicks = 0;
+        function handleLogoClick() {
+            logoClicks++;
+            const badge = document.getElementById('logoClickBadge');
+            badge.classList.remove('hidden');
+            badge.innerText = logoClicks;
+
+            if (logoClicks >= 5) {
+                document.body.classList.toggle('horror-mode');
+                document.getElementById('headerTitleText').innerText = "현목리(眩目里) - 진실의 문";
+                document.getElementById('headerSubText').innerText = "ERROR: 고도(枯道)의 기억이 해제되었습니다.";
+                alert("⚠️ 경고: 시스템 코어가 오염되었습니다. 더 이상 되돌릴 수 없습니다.");
+                logoClicks = 0;
+                badge.classList.add('hidden');
+            }
+        }
+
+        // 4. 비상 점검 블랙아웃 이펙트
+        function triggerBlackout() {
+            const overlay = document.getElementById('blackoutOverlay');
+            overlay.classList.add('active');
+            let timeLeft = 3;
+            const timerSpan = document.getElementById('blackoutTimer');
+            timerSpan.innerText = timeLeft;
+
+            const interval = setInterval(() => {
+                timeLeft--;
+                timerSpan.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    overlay.classList.remove('active');
+                    // 무작위 글리치 발생
+                    document.body.classList.add('force-glitch');
+                    setTimeout(() => {
+                        document.body.classList.remove('force-glitch');
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        // 5. 무작위 글리치 텍스트 타이머 (30초마다 일부러 소름끼치는 문구 노출)
+        setInterval(() => {
+            const titleEl = document.getElementById('heroVillageTitle');
+            const originalText = titleEl.innerText;
+            titleEl.innerText = "도망쳐 (Run away)";
+            titleEl.style.color = "#dc2626";
+            setTimeout(() => {
+                titleEl.innerText = "현목리(玄木里)";
+                titleEl.style.color = "";
+            }, 3000);
+        }, 25000);
+
+        // 6. 길도성 계산기 로직
+        function calculateDonation() {
+            const sessions = document.getElementById('calcSessions').value;
+            document.getElementById('sessionVal').innerText = `${sessions}회`;
+            const baseAmount = parseInt(document.getElementById('calcGrace').value);
+            const total = baseAmount * (sessions > 0 ? (sessions / 6) : 0.5);
+            document.getElementById('resultAmount').innerText = `${Math.round(total).toLocaleString()} 원`;
+        }
+
+        // 7. 모달 제어 함수들
+        function openCounselModal() {
+            document.getElementById('counselModal').classList.remove('hidden');
+        }
+        function closeCounselModal() {
+            document.getElementById('counselModal').classList.add('hidden');
+        }
+        function submitCounsel() {
+            alert("정착 심사 신청서가 길도전 2층으로 안전하게 전송되었습니다. 환영합니다.");
+            closeCounselModal();
+        }
+
+        function openNoticeModal(type) {
+            const modal = document.getElementById('noticeModal');
+            const title = document.getElementById('noticeModalTitle');
+            const body = document.getElementById('noticeModalBody');
+            modal.classList.remove('hidden');
+
+            if (type === 'notice1') {
+                title.innerText = "8월 22일 토요일 '정도제(正道祭)' 개최 안내";
+                body.innerHTML = `<p><strong>일시:</strong> 2026년 8월 22일 토요일 오전 10시</p><p><strong>장소:</strong> 길도전 본당 앞 대광장</p><p><strong>내용:</strong> 한 해의 수확과 새로운 길을 맞이하는 대축제입니다. 모든 주민 및 신도는 샛노란/진노란 배지를 패용하고 참석해야 합니다.</p>`;
+            } else if (type === 'notice2') {
+                title.innerText = "노란 지붕 집 정착 반년 기념 감사 예배";
+                body.innerHTML = `<p>귀농 가구인 노란 지붕 집(미실 씨 댁)의 헌신과 신길회 활동 모범을 축하하는 소규모 예배가 이번 주 수요일 저녁에 진행됩니다.</p>`;
+            } else if (type === 'notice3') {
+                title.innerText = "외부 통신망 점검 안내";
+                body.innerHTML = `<p class="text-red-600 font-bold">마을 안녕과 보안을 위해 향후 무선 기지국 출력이 제한됩니다. 외부와의 불필요한 연락은 차단될 수 있음을 양해바랍니다.</p>`;
+            } else {
+                title.innerText = "정책 안내";
+                body.innerHTML = `<p>본 포털은 전라남도 신원군 현목읍 현목리의 자치 행정 및 신길회 교리 안내를 위해 운영됩니다.</p>`;
+            }
+        }
+        function closeNoticeModal() {
+            document.getElementById('noticeModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
