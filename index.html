@@ -274,6 +274,216 @@
                 animation-duration: 0.5s;
             }
         }
+
+        
+        /* Mobile layout repairs */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: clip;
+        }
+
+        body {
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        img, svg, video, canvas {
+            max-width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        @media (max-width: 640px) {
+            /* Keep long official notices and headings inside the screen. */
+            body > .bg-amber-400 {
+                align-items: flex-start;
+                gap: 8px;
+                text-align: left;
+                line-height: 1.55;
+                padding: 10px 12px;
+            }
+
+            body > .bg-gov-950 {
+                flex-wrap: wrap;
+                gap: 8px 12px;
+                padding: 10px 12px;
+            }
+
+            body > .bg-gov-950 > div {
+                min-width: 0;
+                max-width: 100%;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            header {
+                position: relative !important;
+            }
+
+            header > div:first-child {
+                align-items: stretch;
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            header > div:first-child > div:first-child {
+                width: 100%;
+                min-width: 0;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            header h1 {
+                flex-wrap: wrap;
+                font-size: clamp(18px, 5vw, 22px) !important;
+                line-height: 1.35;
+                overflow-wrap: anywhere;
+            }
+
+            #headerTitleText {
+                min-width: 0;
+                overflow-wrap: anywhere;
+            }
+
+            #headerSubText {
+                line-height: 1.5;
+                overflow-wrap: anywhere;
+            }
+
+            header > div:first-child > div:nth-child(2) {
+                width: 100%;
+                min-width: 0;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            header > div:first-child > div:nth-child(2) > div {
+                min-width: 0;
+                overflow-wrap: anywhere;
+            }
+
+            nav > div {
+                padding-left: 8px;
+                padding-right: 8px;
+                gap: 4px;
+                scrollbar-width: thin;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-btn {
+                flex: 0 0 auto;
+                white-space: nowrap;
+                padding: 12px 10px !important;
+                font-size: 12px;
+            }
+
+            main {
+                width: 100%;
+                padding: 20px 12px !important;
+                min-width: 0;
+            }
+
+            main section,
+            main section > div,
+            main article {
+                min-width: 0;
+                max-width: 100%;
+            }
+
+            main .grid {
+                grid-template-columns: minmax(0, 1fr) !important;
+            }
+
+            main [class*="grid-cols-"] {
+                min-width: 0;
+            }
+
+            main p, main li, main h1, main h2, main h3,
+            main h4, main span, main label, main button {
+                overflow-wrap: anywhere;
+            }
+
+            main h2 {
+                font-size: clamp(25px, 7vw, 34px);
+                line-height: 1.35;
+            }
+
+            main .overflow-x-auto {
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            main table {
+                min-width: 560px;
+            }
+
+            #tickerContainer {
+                max-width: none;
+            }
+
+            footer {
+                padding-left: 12px;
+                padding-right: 12px;
+                overflow-wrap: anywhere;
+            }
+
+            /* The jump-scare smile must stay in the visible phone viewport,
+               even when the page enters horror mode. */
+            #horrorJumpOverlay {
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100vw;
+                height: 100vh;
+                height: 100dvh;
+                min-height: 0;
+                overflow-y: auto;
+                justify-content: center;
+                gap: 0;
+                padding: max(16px, env(safe-area-inset-top)) 18px max(16px, env(safe-area-inset-bottom));
+            }
+
+            #horrorSmile {
+                width: min(58vw, 260px);
+                max-width: 260px;
+                max-height: 34dvh;
+                flex: 0 1 auto;
+            }
+
+            #horrorJumpMessage {
+                width: 100%;
+                max-width: 100%;
+                margin-top: 18px;
+                font-size: clamp(21px, 6.2vw, 32px);
+                line-height: 1.55;
+                letter-spacing: 0.03em;
+                overflow-wrap: anywhere;
+            }
+
+            #horrorJumpSub {
+                max-width: 100%;
+                font-size: 10px;
+                line-height: 1.5;
+                letter-spacing: 0.08em;
+                overflow-wrap: anywhere;
+            }
+        }
+
+        /* A CSS filter on body creates a containing block for fixed overlays.
+           Keep the horror palette, but don't let it push full-screen effects
+           down the document on mobile or desktop. */
+        body.horror-mode {
+            filter: none !important;
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 relative select-none">
