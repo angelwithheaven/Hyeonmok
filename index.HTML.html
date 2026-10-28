@@ -193,7 +193,7 @@
                 <option>한국어 (KR)</option>
                 <option>길문(吉文) 고어</option>
             </select>
-            <button onclick="triggerBlackout()" class="text-slate-400 hover:text-white text-xs underline" title="화면 비상 점검">
+            <button onclick="triggerBlackout(); playBeep(300, 0.4);" class="text-slate-400 hover:text-white text-xs underline" title="화면 비상 점검">
                 비상점검
             </button>
         </div>
@@ -261,7 +261,7 @@
         <div class="max-w-7xl mx-auto w-full flex items-center">
             <span class="bg-gov-700 text-white text-xs font-bold px-2 py-0.5 rounded mr-3 shrink-0">마을 속보</span>
             <div class="overflow-hidden whitespace-nowrap w-full">
-                <div class="animate-marquee-slow font-medium text-slate-800">
+                <div class="animate-marquee-slow font-medium text-slate-800" id="tickerContainer">
                     <span class="mr-12"><i class="fa-solid fa-bell text-amber-600 mr-1"></i> [신길회] 일요일 저녁 길취(공동 식사) 참가 시 성의(길도성) 납부 내역 및 해당 수양 계급 복장(배지)을 필수 착용하십시오.</span>
                     <span class="mr-12 text-red-700 font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> [안내] 현목산 전파 차폐 구역 특성상 외부 개별 인터넷/전화 시도는 엄격히 제한됩니다.</span>
                     <span class="mr-12"><i class="fa-solid fa-truck-ramp-box text-blue-600 mr-1"></i> [당번제] 매달 마지막 주 금요일 읍내 당번 4인이 마을 통합 생필품을 일괄 수송합니다.</span>
@@ -680,7 +680,7 @@
                 <span>|</span>
                 <span class="hover:text-white cursor-pointer" onclick="openNoticeModal('terms')">이용약관</span>
                 <span>|</span>
-                <span class="hover:text-white cursor-pointer text-red-400" onclick="triggerBlackout()">비상망 연결</span>
+                <span class="hover:text-white cursor-pointer text-red-400" onclick="triggerBlackout(); playBeep(150, 0.6);">비상망 연결</span>
             </div>
         </div>
     </footer>
@@ -700,7 +700,7 @@
                 <p class="text-xs text-slate-500">현목리 전입 및 신길회 가입을 위한 사전 심사 설문입니다.</p>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">지원자 성명:</label>
-                    <input type="text" placeholder="성함을 입력하세요" class="w-full border rounded p-2 text-xs focus:outline-none focus:border-gov-600">
+                    <input type="text" id="applicantName" placeholder="성함을 입력하세요 (예: 유저)" class="w-full border rounded p-2 text-xs focus:outline-none focus:border-gov-600">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">과거의 기억과 연고를 모두 끊어낼 준비가 되었습니까?</label>
@@ -731,9 +731,7 @@
                 <h3 id="noticeModalTitle" class="font-bold text-lg text-gov-950">공지사항 상세</h3>
                 <button onclick="closeNoticeModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="noticeModalBody" class="text-sm text-slate-700 leading-relaxed space-y-2">
-                <!-- 내용 동적 주입 -->
-            </div>
+            <div id="noticeModalBody" class="text-sm text-slate-700 leading-relaxed space-y-2"></div>
             <div class="pt-3 border-t text-right">
                 <button onclick="closeNoticeModal()" class="px-4 py-2 bg-gov-600 text-white rounded text-xs font-semibold">확인</button>
             </div>
@@ -741,7 +739,29 @@
     </div>
 
     <script>
-        // 1. 실시간 시계
+        // 1. Web Audio API 신디사이저 (오디오 파일 없이 소리 내기)
+        let audioCtx = null;
+        function playBeep(freq = 440, duration = 0.3, type = 'sine') {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.log("Audio not supported or blocked");
+            }
+        }
+
+        // 2. 실시간 시계
         setInterval(() => {
             const now = new Date();
             const year = now.getFullYear();
@@ -753,8 +773,9 @@
             document.getElementById('currentTime').innerText = `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
         }, 1000);
 
-        // 2. 탭 전환 기능
+        // 3. 탭 전환 기능
         function switchTab(tabId) {
+            playBeep(600, 0.05);
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(el => {
                 el.classList.remove('border-amber-400', 'font-bold');
@@ -768,10 +789,11 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 3. 로고 5회 클릭 시 호러 모드 발동
+        // 4. 로고 5회 클릭 시 호러 모드 발동
         let logoClicks = 0;
         function handleLogoClick() {
             logoClicks++;
+            playBeep(200 + (logoClicks * 100), 0.2, 'sawtooth');
             const badge = document.getElementById('logoClickBadge');
             badge.classList.remove('hidden');
             badge.innerText = logoClicks;
@@ -780,16 +802,18 @@
                 document.body.classList.toggle('horror-mode');
                 document.getElementById('headerTitleText').innerText = "현목리(眩目里) - 진실의 문";
                 document.getElementById('headerSubText').innerText = "ERROR: 고도(枯道)의 기억이 해제되었습니다.";
+                playBeep(110, 1.2, 'square');
                 alert("⚠️ 경고: 시스템 코어가 오염되었습니다. 더 이상 되돌릴 수 없습니다.");
                 logoClicks = 0;
                 badge.classList.add('hidden');
             }
         }
 
-        // 4. 비상 점검 블랙아웃 이펙트
+        // 5. 비상 점검 블랙아웃 이펙트
         function triggerBlackout() {
             const overlay = document.getElementById('blackoutOverlay');
             overlay.classList.add('active');
+            playBeep(120, 0.8, 'sawtooth');
             let timeLeft = 3;
             const timerSpan = document.getElementById('blackoutTimer');
             timerSpan.innerText = timeLeft;
@@ -797,10 +821,10 @@
             const interval = setInterval(() => {
                 timeLeft--;
                 timerSpan.innerText = timeLeft;
+                playBeep(200, 0.1);
                 if (timeLeft <= 0) {
                     clearInterval(interval);
                     overlay.classList.remove('active');
-                    // 무작위 글리치 발생
                     document.body.classList.add('force-glitch');
                     setTimeout(() => {
                         document.body.classList.remove('force-glitch');
@@ -809,19 +833,19 @@
             }, 1000);
         }
 
-        // 5. 무작위 글리치 텍스트 타이머 (30초마다 일부러 소름끼치는 문구 노출)
+        // 6. 무작위 글리치 텍스트 타이머
         setInterval(() => {
             const titleEl = document.getElementById('heroVillageTitle');
-            const originalText = titleEl.innerText;
             titleEl.innerText = "도망쳐 (Run away)";
             titleEl.style.color = "#dc2626";
+            playBeep(800, 0.1, 'square');
             setTimeout(() => {
                 titleEl.innerText = "현목리(玄木里)";
                 titleEl.style.color = "";
             }, 3000);
         }, 25000);
 
-        // 6. 길도성 계산기 로직
+        // 7. 길도성 계산기
         function calculateDonation() {
             const sessions = document.getElementById('calcSessions').value;
             document.getElementById('sessionVal').innerText = `${sessions}회`;
@@ -830,19 +854,42 @@
             document.getElementById('resultAmount').innerText = `${Math.round(total).toLocaleString()} 원`;
         }
 
-        // 7. 모달 제어 함수들
+        // 8. 모달 및 심사 신청서 제출 이스터에그 연출
         function openCounselModal() {
+            playBeep(500, 0.1);
             document.getElementById('counselModal').classList.remove('hidden');
         }
         function closeCounselModal() {
             document.getElementById('counselModal').classList.add('hidden');
         }
+        
         function submitCounsel() {
-            alert("정착 심사 신청서가 길도전 2층으로 안전하게 전송되었습니다. 환영합니다.");
+            const nameInput = document.getElementById('applicantName').value.trim();
+            const userName = nameInput ? nameInput : "지원자";
+            
+            playBeep(150, 0.8, 'sawtooth');
             closeCounselModal();
+
+            // 1. 강제 호러모드 진입
+            document.body.classList.add('horror-mode');
+
+            // 2. 팝업 알림 (소름 돋는 연출)
+            alert(`[안내] ${userName}님의 정착 심사 신청서가 길도전 2층 수양실로 직행했습니다.\n\n"과거의 기억이 성공적으로 끊어졌습니다. 환영합니다."`);
+
+            // 3. 실시간 속보(티커)에 유저 이름 박아넣기
+            const ticker = document.getElementById('tickerContainer');
+            const newTickerItem = document.createElement('span');
+            newTickerItem.className = "mr-12 text-red-500 font-bold glitch-text-hover";
+            newTickerItem.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> [긴급 배정] 지원자 ${userName}님, 즉시 길도전 지하 1층 대기실로 이동하십시오.`;
+            ticker.prepend(newTickerItem);
+
+            // 4. 상단 타이틀 변경
+            document.getElementById('headerTitleText').innerText = `현목리(眩목里) - ${userName}의 감옥`;
+            document.getElementById('headerSubText').innerText = "생도자 등록 완료. 바른 길에서 벗어날 수 없습니다.";
         }
 
         function openNoticeModal(type) {
+            playBeep(450, 0.1);
             const modal = document.getElementById('noticeModal');
             const title = document.getElementById('noticeModalTitle');
             const body = document.getElementById('noticeModalBody');
