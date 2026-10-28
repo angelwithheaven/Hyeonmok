@@ -198,6 +198,14 @@
             color: #b30000;
         }
 
+        #horrorMouth {
+            transition: d 0.9s ease-in-out;
+        }
+
+        #horrorJumpOverlay.escape #horrorMouth {
+            d: path("M 90 205 Q 160 135 230 205");
+        }
+
         .escape-word {
             display: inline-block;
             color: #ef4444;
@@ -293,14 +301,10 @@
 
     <!-- 정착 심사 공포 이스터에그 -->
     <div id="horrorJumpOverlay" aria-hidden="true">
-        <svg id="horrorSmile" viewBox="0 0 320 320" role="img" aria-label="웃다가 우는 얼굴">
+        <svg id="horrorSmile" viewBox="0 0 320 320" role="img" aria-label="웃는 얼굴">
             <circle class="face-outline" cx="160" cy="160" r="140" />
             <path class="face-eye" d="M 95 120 L 95 120 M 225 120 L 225 120" />
-            <path class="face-mouth" d="M 90 185 Q 160 255 230 185">
-                <animate attributeName="d"
-                    values="M 90 185 Q 160 255 230 185;M 90 205 Q 160 135 230 205;M 90 185 Q 160 255 230 185"
-                    dur="1.4s" repeatCount="indefinite" />
-            </path>
+            <path id="horrorMouth" class="face-mouth" d="M 90 185 Q 160 255 230 185" />
         </svg>
         <p id="horrorJumpMessage"></p>
         <p id="horrorJumpSub">HYEONMOK-RI RESIDENT REGISTRATION SYSTEM</p>
@@ -1076,6 +1080,7 @@
             const sub = document.getElementById('horrorJumpSub');
 
             overlay.classList.remove('escape');
+            document.getElementById('horrorMouth').setAttribute('d', 'M 90 185 Q 160 255 230 185');
             overlay.classList.add('active');
             overlay.setAttribute('aria-hidden', 'false');
 
